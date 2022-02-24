@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import s from './Searchbar.module.css';
 
 export function Searchbar({ onSubmit }) {
@@ -10,13 +11,10 @@ export function Searchbar({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-
     const normalizeSearchQuery = searchQuery.trim().toLowerCase();
-
     if (!normalizeSearchQuery) {
       return;
     }
-
     onSubmit(normalizeSearchQuery);
     setSearchQuery('');
   };
@@ -41,3 +39,7 @@ export function Searchbar({ onSubmit }) {
     </header>
   );
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

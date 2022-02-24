@@ -1,9 +1,10 @@
-import { ServiceAPI } from 'components/API';
-import { Button } from 'components/Button';
-import { Modal } from '../Modal';
 import { useState, useEffect } from 'react';
 import { Watch } from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import PropTypes from 'prop-types';
+import { ServiceAPI } from 'components/API';
+import { Button } from 'components/Button';
+import { Modal } from '../Modal';
 import { ImageGalleryItem } from '.';
 import s from './ImageGallery.module.css';
 
@@ -17,7 +18,14 @@ function ImageGallery({ query }) {
   const [imgId, setImgId] = useState(null);
 
   const dataProcessing = response => {
-    const data = response.data.hits.map(data => {
+    const { hits: dataArray } = response.data;
+    if (!dataArray.length) {
+      setStatus('rejected');
+      setError(new Error('Try to change the request'));
+
+      return;
+    }
+    const data = dataArray.map(data => {
       const {
         id,
         largeImageURL: imageURL,
@@ -76,7 +84,7 @@ function ImageGallery({ query }) {
   if (status === 'rejected') {
     return (
       <ul className={s.ImageGallery}>
-        <li>Все плохо: {error}</li>
+        <li>{`Все плохо ${error}`}</li>
       </ul>
     );
   }
@@ -104,5 +112,9 @@ function ImageGallery({ query }) {
   }
   return <></>;
 }
+
+ImageGallery.propTypes = {
+  query: PropTypes.string.isRequired,
+};
 
 export default ImageGallery;
