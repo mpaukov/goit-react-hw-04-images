@@ -1,2 +1,2 @@
-export { default } from './ImageGallery';
+export { ImageGallery } from './ImageGallery';
 export { ImageGalleryItem } from './ImageGalleryItem';
