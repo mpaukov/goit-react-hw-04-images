@@ -17,11 +17,11 @@ export function App() {
   const [imgId, setImgId] = useState(null);
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    setSearchQuery(searchQuery);
-    setPage(1);
-    setData([]);
-  }, [searchQuery]);
+  // useEffect(() => {
+  //   setSearchQuery(searchQuery);
+  //   setPage(1);
+  //   setData([]);
+  // }, [searchQuery]);
 
   useEffect(() => {
     if (!searchQuery) {
@@ -70,6 +70,8 @@ export function App() {
   const handleSubmit = newSearchQuery => {
     if (searchQuery !== newSearchQuery) {
       setSearchQuery(newSearchQuery);
+      setPage(1);
+      setData([]);
     }
     return;
   };
@@ -108,9 +110,9 @@ export function App() {
       )}
 
       {status === 'rejected' && (
-        <ul className={s.ImageGallery}>
-          <li>{`Все плохо ${error}`}</li>
-        </ul>
+        <div className={s.ImageGallery}>
+          <p>{`Something went wrong! ${error}`}</p>
+        </div>
       )}
 
       {showModal && (
